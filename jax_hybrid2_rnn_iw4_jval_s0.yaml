@@ -1,0 +1,174 @@
+robot:
+  wheel_radius: 0.021
+  half_wheelbase: 0.0527
+  body_radius: 0.0704
+  mass: 0.566
+  max_wheel_speed: 14.3
+  max_wheel_cmd_delta: 0.15
+  wall_collision: push
+pitch:
+  length: 2.8
+  width: 2.44
+  goal_width: 0.75
+  goal_depth: 0.19
+  goal_area_width: 1.03
+  goal_area_depth: 0.19
+  penalty_area_width: 1.5
+  penalty_area_depth: 0.47
+  penalty_spot_distance: 0.38
+  center_circle_radius: 0.28
+  corner_arc_radius: 0.09
+  wall_thickness: 0.04
+  wall_mode: open
+ball:
+  radius: 0.0335
+  mass: 0.0577
+  gravity: 9.81
+  rolling_friction: 0.04
+  wall_restitution: 0.745
+  inertia_factor: 0.6667
+  sliding_friction: 0.23
+  wall_friction: 0.23
+  robot_friction: 0.23
+  robot_restitution: 0.5
+  spin_damping: 0.0
+  placement: random
+  x_range:
+  - -1.3665
+  - 1.3665
+  y_range:
+  - -1.1865
+  - 1.1865
+teams:
+  blue:
+    num_robots: 1
+    placement: random
+    x_range:
+    - -1.3296
+    - 1.3296
+    y_range:
+    - -1.1496
+    - 1.1496
+    q_range:
+    - -3.14159
+    - 3.14159
+  yellow:
+    num_robots: 0
+sensors:
+  angles:
+  - -2.53
+  - -1.571
+  - -0.785
+  - -0.175
+  - 0.175
+  - 0.785
+  - 1.571
+  - 2.53
+  max_range: 0.25
+  min_range: 0.005
+  noise:
+    enabled: true
+    model: correlated
+    relative_std: 0.04
+    bias_std: 0.015
+    rho: 0.92
+  normalization: minmax
+vision:
+  mode: frontal
+  horizontal_fov_deg: 131.0
+  ball_max_range: 1.9
+  goal_max_range: 3.6
+  noise:
+    enabled: true
+    model: correlated_close_range
+    rho: 0.95
+    ball_dist_bias_std_m: 0.015
+    ball_angle_bias_std_rad: 0.01
+    goal_dist_bias_std_m: 0.02
+    goal_angle_bias_std_rad: 0.006
+    ball_dist_std_far_m: 0.1
+    ball_dist_std_near_m: 0.16
+    ball_angle_std_far_rad: 0.015
+    ball_angle_std_near_rad: 0.07
+    goal_dist_std_m: 0.08
+    goal_angle_std_rad: 0.012
+    near_start: 0.3
+    near_full: 0.12
+    ball_dropout_far: 0.06
+    ball_dropout_near: 0.22
+    goal_dropout_far: 0.01
+    goal_dropout_near: 0.03
+simulation:
+  global_seed: 1777155758
+  max_steps: 500
+  timestep: 0.1
+  physics_timestep: 0.01
+  num_trials: 5
+  replay_seed: 0
+  trajectory_stride: 1
+  fitness_function: penalty_sparse
+neural_network:
+  type: elman
+  hidden_size: 5
+  output_size: 2
+  vision_inputs: 4
+  activation: sigmoid
+  wheel_output_mapping: floreano
+curriculum:
+  enabled: false
+challenge:
+  enabled: true
+  parameter: forward_l4
+  schedule: linear
+  total_generations: 500
+  p_min: 0.022
+  mode: cumulative
+  k: 1
+  area_correction: true
+motor:
+  noise:
+    enabled: false
+    model: correlated
+    relative_std: 0.03
+    bias_std: 0.02
+    rho: 0.95
+    gain_clip:
+    - 0.75
+    - 1.25
+fitness_params:
+  goal_bonus: 8.0
+  touch_bonus: 1.0
+  approach_weight: 1.5
+  ball_to_goal_weight: 3.0
+  goal_reward: 1.0
+  time_bonus: false
+jax:
+  use_x64: false
+  validate_in_jax: true
+evolution:
+  algorithm: ga
+  population_size: 128
+  num_generations: 500
+  crossover_rate: 0.2
+  crossover_type: single_point
+  weight_bounds:
+  - -8.0
+  - 8.0
+  initial_weight_range:
+  - -4.0
+  - 4.0
+  elitism: 4
+  tournament_size: 2
+  mutation_rate: 0.15
+  mutation_scale: 0.45
+  mutation_type: gaussian
+  immigrant_frac: 0.0
+  l2_lambda: 0.0
+  num_workers: 8
+seeding:
+  enabled: false
+  weights_path: ''
+  seed_fraction: 0.7
+  num_elite_copies: 2
+  seed_mutation_scale: 0.12
+results_dir: results/jax_hybrid2_rnn_iw4_jval_500g/seed_0
